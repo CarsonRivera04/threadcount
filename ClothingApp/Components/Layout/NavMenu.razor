@@ -1,0 +1,77 @@
+﻿@implements IDisposable
+@inject NavigationManager NavigationManager
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href=""><Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.BlackTie"/> Thread Count</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Home" Margin="Margin.Is2"/> Home
+            </NavLink>
+        </div>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Manage">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.User" Margin="Margin.Is2"/> @context.User.Identity?.Name 
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                        <button type="submit" class="nav-link">
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.ArrowLeftLong" Margin="Margin.Is2"/> Logout
+                        </button>
+                    </form>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Register">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.UserPlus" Margin="Margin.Is2" /> Register 
+					</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Login">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.ArrowRightLong" Margin="Margin.Is2"/> Login
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="clothingitems">
+				<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Bars" Margin="Margin.Is2" /> Closet
+			</NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private string? currentUrl;
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+}

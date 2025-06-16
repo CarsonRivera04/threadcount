@@ -1,0 +1,138 @@
+﻿@page "/"
+@using ClothingApp.Models
+@rendermode InteractiveServer
+
+<PageTitle>Thread Count</PageTitle>
+<Div Margin="Margin.IsAuto.OnX">
+	<Div Flex="Flex.Column.AlignItems.Center" Padding="Padding.Is5.OnY">
+		<Div Flex="Flex.Column.AlignItems.Center" TextAlignment="TextAlignment.Center">
+			<Paragraph TextColor="TextColor.Primary" TextWeight="TextWeight.Bold" TextSize="TextSize.Large" Margin="Margin.Is4.FromBottom">
+				Thread Count
+			</Paragraph>
+			<Heading Size="HeadingSize.Is1" TextWeight="TextWeight.Bold" Margin="Margin.Is4.FromBottom">
+				Track what you wear. Organize your closet smarter.
+			</Heading>
+			<AuthorizeView>
+				<NotAuthorized>
+					<Div Flex="Flex.Column.Row.OnDesktop.JustifyContent.Center" Gap="Gap.Is2">
+						<Button Color="Color.Primary" Size="Size.Large" Type="ButtonType.Link" To="/Account/Register" Shadow="Shadow.Small">
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.UserPlus"/> Register
+						</Button>
+						<Button Color="Color.Secondary" Size="Size.Large" Type="ButtonType.Link" To="/Account/Login" Shadow="Shadow.Small">
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.ArrowRightLong"/> Login  
+						</Button>
+					</Div>
+				</NotAuthorized>
+				<Authorized>
+					<Div Flex="Flex.Column.Row.OnDesktop.JustifyContent.Center" Gap="Gap.Is2">
+						<Button Color="Color.Primary" Size="Size.Large" Type="ButtonType.Link" To="/clothingitems" Shadow="Shadow.Small">
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Bars"/> Go to closet
+						</Button>
+					</Div>
+				</Authorized>
+			</AuthorizeView>
+		</Div>
+	</Div>
+</Div>
+<Div Margin="Margin.IsAuto.OnX">
+	<Div Padding="Padding.Is5.Is2.Is0.Is2" Margin="Margin.IsAuto.OnX">
+		<Div Width="Width.Is50" Margin="Margin.IsAuto.OnX" Padding="Padding.Is5.FromBottom" TextAlignment="TextAlignment.Center">
+			<Heading Size="HeadingSize.Is2">
+				Clothing shown clearly.
+			</Heading>
+		</Div>
+		<CardDeck>
+			@{
+				ClothingItem top = new()
+				{
+					Name = 	"Free People Dress",
+					Size = "6",
+					Condition = "Distressed",
+					NumberWorn = 12,
+					LastWorn = DateOnly.FromDateTime(DateTime.Now) 
+				};
+			}
+			<Card Shadow="Shadow.Small">
+				<CardBody>
+					<CardTitle Style="display: flex; align-items: center" Size="5">
+						<ClothingApp.Components.Components.Icons.One_Piece Color="#EAF59A"/>
+						@top.Name
+					</CardTitle>
+					<Divider />
+					<Buttons Style="width: 100%;">
+						<Button Style="width: 33.34%;" Color="Color.Success" Disabled>
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.PlusSquare" /> Wear Item
+						</Button>
+						<Button Style="width: 33.33%;" Color="Color.Secondary" Disabled>
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Pen" /> Edit
+						</Button>
+						<Button Style="width: 33.33%;" Color="Color.Secondary" Disabled>
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Trash" /> Delete
+						</Button>
+					</Buttons>
+					<Divider />
+					<Badge Color="Color.Primary">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Expand" /> Size: @top.Size
+					</Badge>
+					<Badge Color="Color.Secondary">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.GaugeSimpleHigh" /> Condition: @top.Condition
+					</Badge>
+					<Badge Color="Color.Info">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Repeat" /> Times Worn: @top.NumberWorn
+					</Badge>
+					<Badge Color="Color.Dark">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Calendar" /> Last Worn: @top.LastWorn
+					</Badge>
+					<CardText>@top.Description</CardText>
+					<Divider />
+				</CardBody>
+			</Card>
+			@{
+				ClothingItem bottom = new()
+				{
+					Name = 	"North Face Jacket",
+					Size = "Large",
+					Condition = "New with tags",
+					NumberWorn = 5,
+					LastWorn = new DateOnly(2024, 3, 23)
+				};
+			}
+			<Card Shadow="Shadow.Small">
+				<CardBody>
+					<CardTitle Style="display: flex; align-items: center" Size="5">
+						<ClothingApp.Components.Components.Icons.Outerwear Color="#E0B0FF"/>
+						@bottom.Name
+					</CardTitle>
+					<Divider />
+					<Buttons Style="width: 100%;">
+						<Button Style="width: 33.34%;" Color="Color.Success" Disabled>
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.PlusSquare" /> Wear Item
+						</Button>
+						<Button Style="width: 33.33%;" Color="Color.Secondary" Disabled>
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Pen" /> Edit
+						</Button>
+						<Button Style="width: 33.33%;" Color="Color.Secondary" Disabled>
+							<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Trash" /> Delete
+						</Button>
+					</Buttons>
+					<Divider />
+					<Badge Color="Color.Primary">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Expand" /> Size: @bottom.Size
+					</Badge>
+					<Badge Color="Color.Secondary">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.GaugeSimpleHigh" /> Condition: @bottom.Condition
+					</Badge>
+					<Badge Color="Color.Info">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Repeat" /> Times Worn: @bottom.NumberWorn
+					</Badge>
+					<Badge Color="Color.Dark">
+						<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Calendar" /> Last Worn: @bottom.LastWorn
+					</Badge>
+					<CardText>@bottom.Description</CardText>
+					<Divider />
+				</CardBody>
+			</Card>
+		</CardDeck>
+	</Div>
+</Div>
+

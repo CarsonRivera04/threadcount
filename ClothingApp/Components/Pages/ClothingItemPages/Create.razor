@@ -1,0 +1,191 @@
+﻿@page "/clothingitems/create"
+@using ClothingApp.Data
+@using ClothingApp.Models;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<ClothingApp.Data.ClothingAppContext> DbFactory
+@inject NavigationManager NavigationManager
+@inject UserManager<ClothingAppUser> UserManager
+@inject AuthenticationStateProvider AuthStateProvider
+@rendermode InteractiveServer
+
+<PageTitle>Thread Count | Create</PageTitle>
+
+<Div Margin="Margin.IsAuto.OnX" Padding="Padding.Is5.OnX" Width="Width.Is75">
+    <Heading Size="HeadingSize.Is2" Margin="Margin.Is3.FromBottom">
+        Add a new clothing item
+    </Heading>
+    <Form>
+        <Validations @ref="validations" Mode="ValidationMode.Auto" Model="@ClothingItem">
+			<Validation>
+				<Field>
+					<FieldLabel>
+						Clothing Type	
+					</FieldLabel>
+					<Select @bind-SelectedValue="@ClothingItem.ClothingTypeSpecific">
+						<SelectGroup Label="Tops">
+							@foreach (var top in Tops)
+							{
+								<SelectItem Value="@top">@top</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Bottoms">
+							@foreach (var bottom in Bottoms)
+							{
+								<SelectItem Value="@bottom">@bottom</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Outerwear">
+							@foreach (var outerwear in Outerwears)
+							{
+								<SelectItem Value="@outerwear">@outerwear</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="One-Piece">
+							@foreach (var one_piece in One_pieces)
+							{
+								<SelectItem Value="@one_piece">@one_piece</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Activewear">
+							@foreach (var activewear in Activewears)
+							{
+								<SelectItem Value="@activewear">@activewear</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Underwear & Loungewear">
+							@foreach (var underwear_loungewear in Underwear_loungewears)
+							{
+								<SelectItem Value="@underwear_loungewear">@underwear_loungewear</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Swimwear">
+							@foreach (var swimwear in Swimwears)
+							{
+								<SelectItem Value="@swimwear">@swimwear</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Accessories">
+							@foreach (var accessory in Accessories)
+							{
+								<SelectItem Value="@accessory">@accessory</SelectItem>
+							}
+						</SelectGroup>
+						<SelectGroup Label="Other">
+							@foreach (var other in Others)
+							{
+								<SelectItem Value="@other">@other</SelectItem>
+							}
+						</SelectGroup>
+					</Select>
+				</Field>
+			</Validation>
+			<Fields>
+				<Validation>
+					<Field ColumnSize="ColumnSize.IsFull.OnTablet.IsHalf.OnDesktop">
+						<FieldLabel>
+							Brand
+						</FieldLabel>
+						<FieldBody> 
+							<TextEdit @bind-Text="@ClothingItem.Brand">
+								<Feedback>
+									<ValidationError/>
+								</Feedback>
+							</TextEdit>
+						</FieldBody>
+					</Field>
+				</Validation>
+				<Validation>
+					<Field ColumnSize="ColumnSize.IsFull.OnTablet.IsHalf.OnDesktop">
+						<FieldLabel>
+							Size
+						</FieldLabel>
+						<FieldBody>
+							<TextEdit @bind-Text="@ClothingItem.Size">
+								<Feedback>
+									<ValidationError/>
+								</Feedback>
+							</TextEdit>
+
+						</FieldBody>
+					</Field>
+				</Validation>
+			</Fields>
+			<Fields>
+				<Validation>
+					<Field ColumnSize="ColumnSize.IsFull.OnTablet.IsHalf.OnDesktop">
+						<FieldLabel>
+							Color
+						</FieldLabel>
+						<FieldBody>
+							<ColorEdit @bind-Color="@ClothingItem.Color" />
+						</FieldBody>
+					</Field>
+				</Validation>
+				<Validation>
+					<Field ColumnSize="ColumnSize.IsFull.OnTablet.IsHalf.OnDesktop">
+						<FieldLabel>
+							Condition
+						</FieldLabel>
+						<FieldBody>
+							<Select @bind-SelectedValue="@ClothingItem.Condition">
+								@foreach (var condition in Conditions)
+								{
+									<SelectItem Value="@condition">@condition</SelectItem>
+								}
+							</Select>
+						</FieldBody>
+					</Field>
+				</Validation>
+			</Fields>
+			<Fields>
+				<Validation>
+					<Field ColumnSize="ColumnSize.IsFull.OnTablet.IsHalf.OnDesktop">
+						<FieldLabel>
+							Last Worn (Estimate)
+						</FieldLabel>
+						<FieldBody>
+							<DateEdit @bind-Date="@ClothingItem.LastWorn" />
+						</FieldBody>
+					</Field>
+				</Validation>
+				<Validation>
+					<Field ColumnSize="ColumnSize.IsFull.OnTablet.IsHalf.OnDesktop">
+						<FieldLabel>
+							Times Worn (Estimate)
+						</FieldLabel>
+						<FieldBody>
+							<NumericPicker @bind-Value="@ClothingItem.NumberWorn">
+								<Feedback>
+									<ValidationError/>
+								</Feedback>
+							</NumericPicker>
+						</FieldBody>
+					</Field>
+				</Validation>
+			</Fields>
+			<Validation>
+				<Field>
+					<FieldLabel>
+						Description
+					</FieldLabel>
+					<FieldBody>
+						<MemoEdit @bind-Text="@ClothingItem.Description" Rows=3>
+							<Feedback>
+								<ValidationError/>
+							</Feedback>
+						</MemoEdit>
+					</FieldBody>
+				</Field>
+			</Validation>
+
+			<Field>
+				<Buttons Style="width: 100%;">
+					<Button Style="width: 50%;" Clicked="AddClothingItem" Color="Color.Primary"><Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Add"/>  Add clothing item</Button>
+					<Button Style="width: 50%;" Clicked="ResetModel" Type="ButtonType.Link" To="/clothingitems" Color="Color.Secondary"> <Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Bars"/>  Back to list</Button>
+				</Buttons>
+			</Field>
+        </Validations>
+    </Form>
+</Div>
+

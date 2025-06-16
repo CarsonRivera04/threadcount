@@ -1,0 +1,106 @@
+﻿@page "/clothingitems"
+@using ClothingApp.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using ClothingApp.Data
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IDbContextFactory<ClothingAppContext> DbFactory
+@inject UserManager<ClothingAppUser> UserManager
+@implements IAsyncDisposable
+@rendermode InteractiveServer
+
+<PageTitle>Thread Count | Closet</PageTitle>
+
+@{
+	var clothesList = Clothes.ToList().OrderBy(c => c.LastWorn);
+	Dictionary<string, List<ClothingItem>> clothesListDict = new()
+	{
+		["Top"] = clothesList.Where(c => c.ClothingType == "Top").ToList(),
+		["Bottoms"] = clothesList.Where(c => c.ClothingType == "Bottoms").ToList() ,
+		["Outerwear"] = clothesList.Where(c => c.ClothingType == "Outerwear").ToList(),
+		["One-Piece"] = clothesList.Where(c => c.ClothingType == "One-Piece").ToList(),
+		["ActiveWear"] = clothesList.Where(c => c.ClothingType == "ActiveWear").ToList(),
+		["Underwear & Loungewear"] = clothesList.Where(c => c.ClothingType == "Underwear & Loungewear").ToList(),
+		["Swimwear"] = clothesList.Where(c => c.ClothingType == "Swimwear").ToList(),
+		["Accessories"] = clothesList.Where(c => c.ClothingType == "Accessories").ToList(),
+		["Other"] = clothesList.Where(c => c.ClothingType == "Other").ToList()
+	};
+}
+
+@if (clothesList.Count() == 0)
+{
+	<Div Flex="Flex.JustifyContent.Between.AlignItems.Center" Margin="Margin.IsAuto.OnX" Padding="Padding.Is5" Width="Width.Is100" Background="Background.White">
+		<Heading Size="HeadingSize.Is2">
+			<Span Display="Display.Block" TextColor="TextColor.Primary">Take control of you closet</Span>
+			<Span Display="Display.Block" TextColor="TextColor.Muted">
+				<Small>Start by adding your first garment</Small>
+			</Span>
+		</Heading>
+		<Button Color="Color.Primary" Size="Size.ExtraLarge" Type="ButtonType.Link" To="clothingitems/create">
+			<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Add"/>
+			Add Garment	
+		</Button>
+	</Div>
+}
+else
+{
+	<Button Color="Color.Primary" Type="ButtonType.Link" To="clothingitems/create">
+		<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Add"/>
+		Add Garment	
+	</Button>
+	<Divider/>
+}
+
+<Accordion Shadow="Shadow.Small">
+	@foreach (var kvp in clothesListDict)
+	{
+		if (kvp.Value.Count() != 0)
+		{
+			<AccordionItem>
+				<AccordionHeader>
+					<Heading Size="HeadingSize.Is5">
+						<AccordionToggle>
+							<DynamicComponent Type="SafeDict(kvp.Key)" Parameters="GetIconParameters()" />
+							@{
+								var title = string.Empty;
+								if (kvp.Key == "Top")
+								{
+									title = "Tops";
+								}
+								else if (kvp.Key == "ActiveWear")
+								{
+									title = "Activewear";
+								}
+								else
+								{
+									title = kvp.Key; 
+								}
+							}
+							@title
+						</AccordionToggle>
+					</Heading>
+				</AccordionHeader>
+				<AccordionBody>
+					@for (int i = 0; i < kvp.Value.Count() - 1; i += 2)
+					{
+						var top = @kvp.Value[i];
+						var bottom = kvp.Value[i + 1];
+						<CardDeck>
+							<ClothingApp.Components.Components.ClothingCard ClothingItem="@top" IconColor="@top.Color" DeleteFlagChanged="StateHasChanged"/>
+							<ClothingApp.Components.Components.ClothingCard ClothingItem="@bottom" IconColor="@bottom.Color" DeleteFlagChanged="StateHasChanged"/>
+						</CardDeck>
+						<Divider />
+					}
+					@if (kvp.Value.Count() % 2 != 0)
+					{
+						var last = kvp.Value[kvp.Value.Count() - 1];
+						<CardDeck>
+							<ClothingApp.Components.Components.ClothingCard ClothingItem="@last" IconColor="@last.Color" DeleteFlagChanged="StateHasChanged"/>
+						</CardDeck>
+						<Divider />
+					}
+				</AccordionBody>
+			</AccordionItem>
+		}
+	}
+</Accordion>

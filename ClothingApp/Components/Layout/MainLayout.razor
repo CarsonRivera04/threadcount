@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+		<div class="top-row px-4">
+			<AuthorizeView>
+				<Badge Color="Color.Info">
+					<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.User" />  @context.User.Identity?.Name
+				</Badge>
+			</AuthorizeView>
+			<Buttons>
+				<Button Color="Color.Secondary" Size="Size.Small" Type="ButtonType.Link" To="https://www.linkedin.com/in/carsonrivera04/" Target="Target.Blank">
+					<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.LinkedinIn" />
+				</Button>
+				<Button Color="Color.Secondary" Size="Size.Small" Type="ButtonType.Link" To="https://github.com/CarsonRivera04/" Target="Target.Blank">
+					<Icon Name="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Github" />
+				</Button>
+			</Buttons>
+		</div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
