@@ -4,7 +4,8 @@ Thread Count is a web application designed to simplify and streamline closet org
 
 **Try it out now:** http://threadcountcarson.com/
 
-
+## Demo
+![Untitled](https://github.com/user-attachments/assets/9c109c2b-82ce-4d27-924f-dca3d336ad94)
 
 
 ## Tech Stack
@@ -20,7 +21,6 @@ Thread Count is a web application designed to simplify and streamline closet org
 
 
 
-## Demo
-![Untitled](https://github.com/user-attachments/assets/9c109c2b-82ce-4d27-924f-dca3d336ad94)
+
 
 
