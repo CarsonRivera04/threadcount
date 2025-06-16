@@ -2,7 +2,7 @@
 
 Thread Count is a web application designed to simplify and streamline closet organization and wardrobe management.
 
-**Try it out now:** https://threadcount-hza0fmg8adhzfbgc.eastus-01.azurewebsites.net/
+**Try it out now:** http://threadcountcarson.com/
 
 
 
