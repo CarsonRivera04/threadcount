@@ -11,9 +11,11 @@ Thread Count is a web application designed to simplify and streamline closet org
 
 **Frontend & UI Framework:** Blazor Server, Blazorise
 
-**Backend:** ASP.NET Core
+**Backend:** .NET 8 (C#)
 
 **Database:** SQLite
+
+**Hosting:** Azure App Service
 
 
 
