@@ -21,6 +21,6 @@ Thread Count is a web application designed to simplify and streamline closet org
 
 
 ## Demo
-![Untitled](https://github.com/user-attachments/assets/9f27f64f-ee85-41d3-b9a7-909eaef2332d)
+![Untitled](https://github.com/user-attachments/assets/9c109c2b-82ce-4d27-924f-dca3d336ad94)
 
 
